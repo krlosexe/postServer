@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket io</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+
+    <div id="chat-container">
+        <div id="chat-windows">
+            <div id="output"></div>
+            <div id="action"></div>
+        </div>
+        <input type="text" id='message' placeholder="Mensaje">
+        <input type="text" id='username' placeholder="Nombre de usuario">
+        <button id='send'>Apply</button>
+    </div>
+
+
+    <script src="socket.io/socket.io.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>
