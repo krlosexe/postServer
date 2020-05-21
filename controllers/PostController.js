@@ -6,14 +6,13 @@ const jwt             = require('jsonwebtoken')
 const config          = require('../config/config')
 const mongo           = client_mongo()
 const requesting      = require('request');
+const fs              = require('fs');
 
 app.set('key', config.key);
 
 exports.store = function(request, response) {
 
     const dbo = mongo.db("prp");
-
-   // console.log(request.file)
 
     const lines  =  request.body.lines.split(',')
     var today    = new Date();
@@ -28,13 +27,15 @@ exports.store = function(request, response) {
         extension = request.file.mimetype.split('/')
     }
 
-    
+  //  console.log(`public/${file_name}`)
+    var base64str = base64_encode(`public/${file_name}`);
 
      const data = {
         "post"      :  request.body.post,
         "lines"     :  lines,
         "create_at" :  dataTime,
         "file"      :  file_name,
+        "base_64"   :  `data:${request.file.mimetype};base64,${base64str}`,
         "extension" : extension[1]
      }
 
@@ -42,8 +43,6 @@ exports.store = function(request, response) {
          console.log("1 document inserted");
      });
      
-
-
 
      const form = {
         form:{
@@ -79,10 +78,19 @@ exports.get = function(request, response) {
 
    });
 
-
-   
    
 };
+
+
+
+
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
+
 
 
 
