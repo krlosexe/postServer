@@ -22,12 +22,13 @@ exports.store = function(request, response) {
     var dataTime = `${date} ${time}`
 
     let file_name = "0"
+    let extension = "0"
     if(request.file != undefined){
         file_name = "upload/" + request.file.originalname
+        extension = request.file.mimetype.split('/')
     }
 
-
-    const extension = request.file.mimetype.split('/')
+    
 
      const data = {
         "post"      :  request.body.post,
