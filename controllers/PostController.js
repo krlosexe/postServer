@@ -74,7 +74,7 @@ exports.get = function(request, response) {
    var   data  = []
    const query = {lines : request.params.name_line}
 
-   dbo.collection("posts").find(query, {_id : 1,post : 1,lines : 1, create_at : 1, file : 1, extension : 1, base_64 : 0}).toArray(function(err, result) {
+   dbo.collection("posts").find(query, {extension : 'jpeg'}, {_id : 0, base_64 : 0}).toArray(function(err, result) {
         data = result
         response.status(200).json(data)
 
