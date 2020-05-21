@@ -13,6 +13,8 @@ exports.store = function(request, response) {
 
     const dbo = mongo.db("prp");
 
+    console.log(request.file)
+    
     const lines  =  request.body.lines.split(',')
     var today    = new Date();
     var date     = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
