@@ -75,7 +75,7 @@ exports.get = function(request, response) {
 
    const query = {lines : request.params.name_line}
 
-   var mysort = { create_at: 1 };
+   var mysort = { create_at: -1 };
 
    dbo.collection("posts")
     .find(query, 
@@ -84,7 +84,7 @@ exports.get = function(request, response) {
 
     .sort(mysort)
 
-    
+
     .toArray(function(err, result) {
         data = result
         response.status(200).json(data)
