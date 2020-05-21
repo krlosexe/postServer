@@ -68,13 +68,23 @@ exports.store = function(request, response) {
 
 
 exports.get = function(request, response) {
-
+    console.log("ejencuntado query")
    const dbo = mongo.db("prp");
 
    var   data  = []
+   var usersProjection = { 
+    __v: false,
+    _id: false
+};
+
    const query = {lines : request.params.name_line}
 
-   dbo.collection("posts").find(query, {_id : 0, base_64 : 0}).toArray(function(err, result) {
+   dbo.collection("posts")
+    .find(query, 
+        {fields : {base_64 : 0}}
+    )
+
+    .toArray(function(err, result) {
         data = result
         response.status(200).json(data)
 
