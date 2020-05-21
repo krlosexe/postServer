@@ -26,8 +26,6 @@ exports.store = function(request, response) {
         "post"      :  request.body.post,
         "lines"     :  lines,
         "create_at" :  dataTime,
-        "file"      :  file_name,
-        "extension" : extension[1]
      }
 
     let file_name = "0"
@@ -36,9 +34,11 @@ exports.store = function(request, response) {
         file_name = "upload/" + request.file.originalname
         extension = request.file.mimetype.split('/')
         let base64str = base64_encode(`public/${file_name}`);
-        data.base_64 =  `data:${request.file.mimetype};base64,${base64str}`
-    }
 
+        data.file         =  file_name 
+        data.extension    =  extension[1] 
+        data.base_64      =  `data:${request.file.mimetype};base64,${base64str}`
+    }
      
 
     dbo.collection("posts").insertOne(data, function(err, res) {
