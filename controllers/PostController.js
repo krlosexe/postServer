@@ -95,9 +95,12 @@ exports.get = function(request, response) {
 exports.getById = function(request, response) {
    
    const dbo = mongo.db("prp");
+   
+   var ObjectID = require('mongodb').ObjectID; 
 
-   const query = {_id : request.params.id}
-   dbo.collection("posts").findOne({}, function(err, result) {
+   const query = {"_id" : new ObjectID(request.params.id) }
+   console.log("El query ",query)
+   dbo.collection("posts").findOne(query, function(err, result) {
     response.status(200).json(result.base_64)
   });
 
