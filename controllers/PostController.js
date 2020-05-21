@@ -13,8 +13,8 @@ exports.store = function(request, response) {
 
     const dbo = mongo.db("prp");
 
-    console.log(request.file)
-    
+   // console.log(request.file)
+
     const lines  =  request.body.lines.split(',')
     var today    = new Date();
     var date     = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
@@ -26,11 +26,15 @@ exports.store = function(request, response) {
         file_name = "upload/" + request.file.originalname
     }
 
+
+    const extension = request.file.mimetype.split('/')
+
      const data = {
         "post"      :  request.body.post,
         "lines"     :  lines,
         "create_at" :  dataTime,
-        "file"      :  file_name
+        "file"      :  file_name,
+        "extension" : extension[1]
      }
 
     dbo.collection("posts").insertOne(data, function(err, res) {
