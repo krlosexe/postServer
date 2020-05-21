@@ -101,7 +101,7 @@ exports.getById = function(request, response) {
    const query = {"_id" : new ObjectID(request.params.id) }
    console.log("El query ",query)
    dbo.collection("posts").findOne(query, function(err, result) {
-    response.status(200).json(["base_64" : result.base_64])
+    response.status(200).json({"base_64" : result.base_64})
   });
 
 
