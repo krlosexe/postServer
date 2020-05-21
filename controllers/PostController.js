@@ -74,7 +74,7 @@ exports.get = function(request, response) {
    var   data  = []
    const query = {lines : request.params.name_line}
 
-   dbo.collection("posts").find(query).toArray(function(err, result) {
+   dbo.collection("posts").find(query, {base_64 : 0}).toArray(function(err, result) {
         data = result
         response.status(200).json(data)
 
