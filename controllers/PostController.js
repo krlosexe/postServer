@@ -72,10 +72,6 @@ exports.get = function(request, response) {
    const dbo = mongo.db("prp");
 
    var   data  = []
-   var usersProjection = { 
-    __v: false,
-    _id: false
-};
 
    const query = {lines : request.params.name_line}
 
@@ -89,10 +85,25 @@ exports.get = function(request, response) {
         response.status(200).json(data)
 
    });
-
    
 };
 
+
+
+
+
+exports.getById = function(request, response) {
+   
+   const dbo = mongo.db("prp");
+
+   const query = {_id : request.params.id}
+   dbo.collection("posts").findOne({}, function(err, result) {
+    response.status(200).json(result.base_64)
+  });
+
+
+   
+};
 
 
 
