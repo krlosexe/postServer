@@ -20,24 +20,26 @@ exports.store = function(request, response) {
     var time     = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
     var dataTime = `${date} ${time}`
 
+
+
+    const data = {
+        "post"      :  request.body.post,
+        "lines"     :  lines,
+        "create_at" :  dataTime,
+        "file"      :  file_name,
+        "extension" : extension[1]
+     }
+
     let file_name = "0"
     let extension = "0"
     if(request.file != undefined){
         file_name = "upload/" + request.file.originalname
         extension = request.file.mimetype.split('/')
+        let base64str = base64_encode(`public/${file_name}`);
+        data.base_64 =  `data:${request.file.mimetype};base64,${base64str}`
     }
 
-  //  console.log(`public/${file_name}`)
-    var base64str = base64_encode(`public/${file_name}`);
-
-     const data = {
-        "post"      :  request.body.post,
-        "lines"     :  lines,
-        "create_at" :  dataTime,
-        "file"      :  file_name,
-        "base_64"   :  `data:${request.file.mimetype};base64,${base64str}`,
-        "extension" : extension[1]
-     }
+     
 
     dbo.collection("posts").insertOne(data, function(err, res) {
          console.log("1 document inserted");
