@@ -56,10 +56,21 @@ exports.store = function(request, response) {
      });
 
 
+    console.log("Emitiendo....")
 
-    setTimeout(() => {
-        response.status(200).json({"success" : data})
-    }, 2000)
+    request.io.emit("newPost", { 
+        "_id"       :  data._id, 
+        "post"      :  request.body.post,
+        "lines"     :  lines,
+        "create_at" :  dataTime,
+        "file"      :  file_name,
+        "extension" : extension[1] 
+    })
+
+    //request.io.to(client.id).emit("ReceivePost", []);  
+
+
+    response.status(200).json({"success" : data})
     
 };
 
@@ -68,14 +79,15 @@ exports.store = function(request, response) {
 
 
 exports.get = function(request, response) {
-    console.log("ejencuntado query")
+   console.log("ejencuntado query")
    const dbo = mongo.db("prp");
 
+   
    var   data  = []
 
    const query = {lines : request.params.name_line}
 
-   var mysort = { create_at: -1 };
+   var mysort = { _id: -1 };
 
    dbo.collection("posts")
     .find(query, 
@@ -104,6 +116,7 @@ exports.getById = function(request, response) {
    var ObjectID = require('mongodb').ObjectID; 
 
    const query = {"_id" : new ObjectID(request.params.id) }
+   
    console.log("El query ",query)
    dbo.collection("posts").findOne(query, function(err, result) {
     response.status(200).json({"base_64" : result.base_64, "post" : result.post})
