@@ -41,7 +41,7 @@ Routes.use(function(req, res, next) {
 
 
 Routes.post('/api/auth', authController.auth);
-Routes.post('/api/create/post', middlewareJwt, upload.single('fileToUpload'), postController.store);
+Routes.post('/api/create/post', upload.single('fileToUpload'), postController.store);
 Routes.get('/api/get/posts/:name_line', postController.get);
 
 Routes.get('/api/get/post/:id', postController.getById);
